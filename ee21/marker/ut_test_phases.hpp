@@ -1,6 +1,6 @@
 #pragma once
 
-#define TEST_PARSER false
+#define TEST_PARSER true
 #define TEST_RPN false
 #define TEST_EE false
 
