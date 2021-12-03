@@ -40,10 +40,85 @@ the program(s) have been supplied.
 #include <ee/operator.hpp>
 #include <ee/pseudo_operation.hpp>
 #include <stack>
-
+#include <queue>
+#include <string>
 
 [[nodiscard]] TokenList Parser::parse(TokenList const& infixTokens) {
 	
-	// The following line is just a placeholder until you have completed the parser.
-	return TokenList();
+	std::stack<Token::pointer_type> operStack;
+	TokenList postfixTokens;
+	try{
+		for (auto tk : infixTokens)
+		{
+			if (is<Operand>(tk))
+				postfixTokens.push_back(tk);
+			else if (is<Function>(tk))
+				operStack.push(tk);
+			else if (is<ArgumentSeparator>(tk))
+			{
+				while (!is<LeftParenthesis>(operStack.top()))
+				{
+					postfixTokens.push_back(operStack.top());
+					operStack.pop();
+				}
+			}
+			else if (is<LeftParenthesis>(tk))
+				operStack.push(tk);
+			else if (is<RightParenthesis>(tk))
+			{
+				while (!is<LeftParenthesis>(operStack.top()))
+				{
+					postfixTokens.push_back(operStack.top());
+					operStack.pop();
+				}
+				if (operStack.empty())
+					throw "Right parenthesis, has no matching left parenthesis.";
+
+				operStack.pop();
+				if (!operStack.empty() && is<Function>(operStack.top()))
+				{
+					postfixTokens.push_back(operStack.top());
+					operStack.pop();
+				}
+			}
+			else if (is<Operator>(tk))
+			{
+				while (!operStack.empty())
+				{
+					if (!is<Operator>(operStack.top()) || is<NonAssociative>(tk))
+						break;
+					if (is<LAssocOperator>(tk))
+					{
+						auto operatorTk = convert<Operator>(tk);
+						auto operatorSt = convert<Operator>(operStack.top());
+						if (operatorTk->precedence() > operatorSt->precedence())
+							break;
+					}
+					if (is<RAssocOperator>(tk))
+					{
+						auto operatorTk = convert<Operator>(tk);
+						auto operatorSt = convert<Operator>(operStack.top());
+						if (operatorTk->precedence() >= operatorSt->precedence())
+							break;
+					}
+					postfixTokens.push_back(operStack.top());
+					operStack.pop();
+				}//while
+				operStack.push(tk);
+			}//elseif
+			else
+				throw "Unkown token.";
+		}//end for
+		while (!operStack.empty())
+		{
+			if (is<LeftParenthesis>(operStack.top()))
+				throw "Missing right-parenthesis.";
+			postfixTokens.push_back(operStack.top());
+			operStack.pop();
+		}//while
+	}//try
+	catch (std::string e) {
+		std::cout << e << std::endl;
+	}
+	return postfixTokens;
 }
