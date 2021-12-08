@@ -36,12 +36,14 @@ the program(s) have been supplied.
 #include <ee/operation.hpp>
 #include <cassert>
 #include <stack>
-#include <algorithm>
 
 
 [[nodiscard]] Operand::pointer_type RPNEvaluator::evaluate( TokenList const& rpnExpression ) {
 	
 	std::stack<Token::pointer_type> stack;
+	TokenList values;
+	if (rpnExpression.empty())
+		throw std::exception ("Error: insufficient operands");
 	for (auto tk : rpnExpression)
 	{
 		if (is<Operand>(tk))
@@ -51,22 +53,20 @@ the program(s) have been supplied.
 			auto operTk = convert<Operation>(tk);
 			auto operationNum = operTk->number_of_args();
 			if (operationNum > stack.size())
-				throw "Insufficient # operands of operation";
+				throw std::exception("Insufficient # operands of operation");
 			for (unsigned i = 0; i < operationNum; i++) 
 			{
-				auto operand = stack.top();
+				values.push_back(stack.top());
 				stack.pop();
-				auto oper = tk.get();
-				
 			}
-			auto operand = stack.top();
-			stack.pop();
-			auto operation = convert<Operation>(tk);
-			operation->str();
-		}
-	}
+			stack.push(operTk->perform(values));
+		}//else
+	}//for
+	if (stack.size() > 1)
+		throw std::exception("Error: too many operands");
+	if (stack.empty())
+		throw std::exception("Too many operations for the number of operands.");
 	
-	// The following line is just a placeholder until you have completed the parser.
-	return Operand::pointer_type();
+	return convert<Operand>(stack.top());
 }
 

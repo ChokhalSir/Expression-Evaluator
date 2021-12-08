@@ -1,15 +1,15 @@
 #pragma once
 
-#define TEST_INTEGER false
+#define TEST_INTEGER true
 
-#define TEST_UNARY_OPERATOR false
+#define TEST_UNARY_OPERATOR true
 #define TEST_BINARY_OPERATOR false
 
 #define	TEST_NAMED_OPERATOR false
 #define TEST_PARENTHESIS false
 #define TEST_FUNCTION false
 
-#define TEST_REAL false
+#define TEST_REAL true
 
 #define TEST_SINGLE_ARG false
 #define TEST_MULTI_ARG false

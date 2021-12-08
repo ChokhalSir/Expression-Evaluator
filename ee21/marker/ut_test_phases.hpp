@@ -4,7 +4,7 @@
 #define TEST_RPN false
 #define TEST_EE false
 
-#define TEST_INTEGER false
+#define TEST_INTEGER true
 #define TEST_UNARY_OPERATOR false
 #define TEST_BINARY_OPERATOR false
 #define	TEST_NAMED_OPERATOR false

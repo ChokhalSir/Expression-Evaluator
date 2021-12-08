@@ -60,4 +60,6 @@ public:
 	DEF_POINTER_TYPE(Operation)
 
 	[[nodiscard]] virtual unsigned number_of_args() const = 0;
+
+	[[nodiscard]] virtual Token::pointer_type perform(TokenList & values) = 0;
 };
