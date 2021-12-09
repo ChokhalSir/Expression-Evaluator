@@ -44,7 +44,116 @@ the program(s) have been supplied.
 
 
 #include <ee/function.hpp>
+#include <ee/operator.hpp>
 #include <ee/integer.hpp>
+#include <ee/real.hpp>
+
+//Abs operation
+Token::pointer_type Abs::perform(TokenList& values) {
+	if(is<Integer>(values[0]))
+		return make<Integer>(abs(value_of<Integer>(values[0])));
+	else
+		return make<Real>(abs(value_of<Real>(values[0])));	
+}
+
+//Arccos operation
+Token::pointer_type Arccos::perform(TokenList& values) {
+	return make<Real>(acosh(value_of<Real>(values[0])));
+}
+
+//Arcsin operation
+Token::pointer_type Arcsin::perform(TokenList& values) {
+	return make<Real>(asin(value_of<Real>(values[0])));
+}
+
+//Arctan operation
+Token::pointer_type Arctan::perform(TokenList& values) {
+	return make<Real>(atanh(value_of<Real>(values[0])));
+}
+
+//Ceil operation
+Token::pointer_type Ceil::perform(TokenList& values) {
+	return make<Real>(ceil(value_of<Real>(values[0])));
+}
+
+//Cos operation
+Token::pointer_type Cos::perform(TokenList& values) {
+	return make<Real>(cos(value_of<Real>(values[0])));
+}
+
+//Exp operation
+Token::pointer_type Exp::perform(TokenList& values) {
+	return make<Real>(exp(value_of<Real>(values[0])));
+}
+
+//Floor operation
+Token::pointer_type Floor::perform(TokenList& values) {
+	return make<Real>(floor(value_of<Real>(values[0])));
+}
+
+
+//Lb - logarithm base 2 operation
+Token::pointer_type Lb::perform(TokenList& values) {
+	return make<Real>(log2(value_of<Real>(values[0])));
+}
+
+//Ln - natural logarithm operation
+Token::pointer_type Ln::perform(TokenList& values) {
+	return make<Real>(log(value_of<Real>(values[0])));
+}
+
+//Sin operation
+Token::pointer_type Sin::perform(TokenList& values) {
+	return make<Real>(sin(value_of<Real>(values[0])));
+}
+
+//Sqrt operation
+Token::pointer_type Sqrt::perform(TokenList& values) {
+	return make<Real>(sqrt(value_of<Real>(values[0])));
+}
+
+//Tan operation
+Token::pointer_type Tan::perform(TokenList& values) {
+	return make<Real>(tan(value_of<Real>(values[0])));
+}
+
+
+//Two argument functions
+
+//Max operation
+Token::pointer_type Max::perform(TokenList& values) {
+	if(is<Integer>(values[0]))
+		return make<Integer>(value_of<Integer>(values[0]) > value_of<Integer>(values[1]) 
+			? value_of<Integer>(values[0]) 
+			: value_of<Integer>(values[1]));
+	else
+		return make<Real>(value_of<Real>(values[0]) > value_of<Real>(values[1])
+			? value_of<Real>(values[0])
+			: value_of<Real>(values[1]));
+}
+
+//Min operation
+Token::pointer_type Min::perform(TokenList& values) {
+	if (is<Integer>(values[0]))
+		return make<Integer>(value_of<Integer>(values[0]) < value_of<Integer>(values[1])
+			? value_of<Integer>(values[0])
+			: value_of<Integer>(values[1]));
+	else
+		return make<Real>(value_of<Real>(values[0]) < value_of<Real>(values[1])
+			? value_of<Real>(values[0])
+			: value_of<Real>(values[1]));
+}
+
+//Pow operation
+Token::pointer_type Pow::perform(TokenList& values) {
+	Power power;
+	return power.perform(values);
+}
+
+//Arctan2 operation
+Token::pointer_type Arctan2::perform(TokenList& values) {
+	return make<Real>(atan2(value_of<Real>(values[1]),value_of<Real>(values[0])));
+}
 
 
 

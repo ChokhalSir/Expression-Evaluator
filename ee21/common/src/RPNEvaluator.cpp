@@ -34,6 +34,7 @@ the program(s) have been supplied.
 #include <ee/RPNEvaluator.hpp>
 #include <ee/integer.hpp>
 #include <ee/real.hpp>
+#include <ee/variable.hpp>
 #include <ee/operation.hpp>
 #include <cassert>
 #include <algorithm>
@@ -73,6 +74,8 @@ the program(s) have been supplied.
 				}
 				
 			}
+			if(values.size() == 1 && is<Variable>(values[0]))
+				throw std::exception("Error: variable not initialized");
 			stack.push_back(operTk->perform(values));
 		}//else
 	}//for

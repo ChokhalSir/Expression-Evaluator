@@ -129,6 +129,8 @@ public:
 						/*! Assignment token. */
 						class Assignment : public RAssocOperator {
 						DEF_PRECEDENCE(ASSIGNMENT)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 
@@ -145,6 +147,7 @@ public:
 						/*! And token. */
 						class And : public LAssocOperator {
 						DEF_PRECEDENCE(LOGAND)
+						public:
 							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
@@ -158,31 +161,43 @@ public:
 						/*! Equality token. */
 						class Equality : public LAssocOperator {
 						DEF_PRECEDENCE(EQUALITY)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Greater than token. */
 						class Greater : public LAssocOperator {
 						DEF_PRECEDENCE(RELATIONAL)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Greater than or equal to token. */
 						class GreaterEqual : public LAssocOperator {
 						DEF_PRECEDENCE(RELATIONAL)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Inequality operator token. */
 						class Inequality : public LAssocOperator {
 						DEF_PRECEDENCE(EQUALITY)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Less than operator token. */
 						class Less : public LAssocOperator {
 						DEF_PRECEDENCE(RELATIONAL)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Less than equal-to operator token. */
 						class LessEqual : public LAssocOperator {
 						DEF_PRECEDENCE(RELATIONAL)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Multiplication operator token. */
@@ -202,16 +217,22 @@ public:
 						/*! Nand operator token. */
 						class Nand : public LAssocOperator {
 						DEF_PRECEDENCE(LOGAND)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Nor operator token. */
 						class Nor : public LAssocOperator {
 						DEF_PRECEDENCE(LOGOR)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Or operator token. */
 						class Or : public LAssocOperator {
 						DEF_PRECEDENCE(LOGOR)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Subtraction operator token. */
@@ -224,11 +245,15 @@ public:
 						/*! XOR operator token. */
 						class Xor : public LAssocOperator {
 						DEF_PRECEDENCE(LOGOR)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! XNOR operator token. */
 						class Xnor : public LAssocOperator {
 						DEF_PRECEDENCE(LOGOR)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 
