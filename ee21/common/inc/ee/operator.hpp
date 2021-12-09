@@ -87,9 +87,6 @@ the program(s) have been supplied.
 
 #include <ee/operand.hpp>
 #include <ee/operation.hpp>
-#include <ee/integer.hpp>
-#include <ee/real.hpp>
-#include <ee/boolean.hpp>
 
 /*! Operator Precedence values. */
 enum class Precedence { MIN = 0,
@@ -125,6 +122,8 @@ public:
 						/*! Power token. */
 						class Power : public RAssocOperator {
 						DEF_PRECEDENCE(POWER)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Assignment token. */
@@ -140,26 +139,20 @@ public:
 						class Addition : public LAssocOperator {
 						DEF_PRECEDENCE(ADDITIVE)
 						public:
-							//[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override
-							//{
-							//	/*
-							//	if (is<Integer>(values[0])) {
-							//		auto op1 = value_of<Integer>(values[0]);
-							//		auto op2 = value_of<Integer>(values[1]);
-							//		return make<Token::pointer_type> (op1 + op2);
-							//	}*/
-							//	//return Token::pointer_type();
-							//};
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! And token. */
 						class And : public LAssocOperator {
 						DEF_PRECEDENCE(LOGAND)
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Division token. */
 						class Division : public LAssocOperator {
 						DEF_PRECEDENCE(MULTIPLICATIVE)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Equality token. */
@@ -195,11 +188,15 @@ public:
 						/*! Multiplication operator token. */
 						class Multiplication : public LAssocOperator {
 						DEF_PRECEDENCE(MULTIPLICATIVE)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Modulus operator token. */
 						class Modulus : public LAssocOperator {
 						DEF_PRECEDENCE(MULTIPLICATIVE)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Nand operator token. */
@@ -220,6 +217,8 @@ public:
 						/*! Subtraction operator token. */
 						class Subtraction : public LAssocOperator {
 						DEF_PRECEDENCE(ADDITIVE)
+						public:
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! XOR operator token. */
@@ -245,41 +244,17 @@ public:
 						/*! Identity operator token. */
 						class Identity : public UnaryOperator {
 						public:
-							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override {
-								if (is<Integer>(values[0]))
-								{
-									auto value = value_of<Integer>(values[0]);
-									return make<Integer>(value);
-								}
-								else if (is<Real>(values[0]))
-								{
-									auto value = value_of<Real>(values[0]);
-									return make<Real>(value);
-								}
-							}
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Negation operator token. */
 						class Negation : public UnaryOperator {
-							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override {
-								if (is<Integer>(values[0]))
-								{
-									auto value = value_of<Integer>(values[0]) * (-1);
-									return make<Integer>(value);
-								}
-								else if (is<Real>(values[0]))
-								{
-									auto value = value_of<Real>(values[0]) * (-1);
-									return make<Real>(value);
-								}
-							}
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 						/*! Not operator token. */
 						class Not : public UnaryOperator {
-							/*[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override {
-								return make<Boolean>(!value_of<Boolean>(values[0]));
-							}*/
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
 
 				/*! Postfix Operator token base class. */
@@ -287,15 +262,5 @@ public:
 
 						/*! Factorial token base class. */
 						class Factorial : public PostfixOperator {
-							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override {
-								if (is<Integer>(values[0]))
-								{
-									auto value = value_of<Integer>(values[0]);
-									Integer::value_type res = 1;
-									for (Integer::value_type i = 2; i <= value; ++i) {
-										res *= i;
-									}
-									return make<Integer>(res);
-								}
-							}
+							[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 						};
