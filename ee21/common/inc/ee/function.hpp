@@ -149,6 +149,8 @@ class Function : public Operation { };
 
 				/*! previous result token. Argument is the 1-base index of the result. */
 				class Result : public OneArgFunction { 
+				public:
+					[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 				};
 
 				/*! sine function token. */

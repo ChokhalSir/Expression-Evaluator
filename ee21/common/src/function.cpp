@@ -102,6 +102,12 @@ Token::pointer_type Ln::perform(TokenList& values) {
 	return make<Real>(log(value_of<Real>(values[0])));
 }
 
+//Log - logarithm base 10 operation
+Token::pointer_type Log::perform(TokenList& values) {
+	return make<Real>(log10(value_of<Real>(values[0])));
+}
+
+
 //Sin operation
 Token::pointer_type Sin::perform(TokenList& values) {
 	return make<Real>(sin(value_of<Real>(values[0])));
@@ -155,5 +161,8 @@ Token::pointer_type Arctan2::perform(TokenList& values) {
 	return make<Real>(atan2(value_of<Real>(values[1]),value_of<Real>(values[0])));
 }
 
-
+//Result operation
+Token::pointer_type Result::perform(TokenList& values) {
+	return make<Real>(value_of<Real>(values[0]));
+}
 

@@ -36,6 +36,7 @@ the program(s) have been supplied.
 #include <ee/real.hpp>
 #include <ee/variable.hpp>
 #include <ee/operation.hpp>
+#include <ee/operator.hpp>
 #include <cassert>
 #include <algorithm>
 
@@ -56,6 +57,20 @@ the program(s) have been supplied.
 			auto operationNum = operTk->number_of_args();
 			if (operationNum > stack.size())
 				throw std::exception("Insufficient # operands of operation");
+			//if there is a variable in the stack replace it with its value.
+			auto variableId = std::find_if(stack.begin(), stack.end(), [](auto i) {return is<Variable>(i);});
+			for (auto i : stack) 
+			{
+				if (variableId != stack.end() && !is<Assignment>(operTk))
+				{
+					auto var = convert<Variable>(*variableId);
+					if (!var->value())
+						throw std::exception("Error: variable not initialized");
+					auto newId = stack.erase(variableId);
+					stack.insert(newId, var->value());
+				}
+				variableId = std::find_if(stack.begin(), stack.end(), [](auto i) {return is<Variable>(i); });
+			}
 			//if there is a real number in the stack realId receive its iterator.
 			auto realId = std::find_if(stack.begin(), stack.end(), [](auto i) {return is<Real>(i); });
 			bool thereIsReal = realId != stack.end();
@@ -77,6 +92,7 @@ the program(s) have been supplied.
 			if(values.size() == 1 && is<Variable>(values[0]))
 				throw std::exception("Error: variable not initialized");
 			stack.push_back(operTk->perform(values));
+			values.clear();
 		}//else
 	}//for
 	if (stack.size() > 1)

@@ -63,12 +63,12 @@ Integer::value_type fast_power(Integer::value_type base, Integer::value_type exp
 
 
 //fast power function for Real
-Real::value_type fast_power(Real::value_type base, Integer::value_type exponent) { // exponent >= 0
+Real::value_type fast_power(Real::value_type base, Real::value_type exponent) { // exponent >= 0
 	if (exponent.is_zero())
 		return Real::value_type(1);
 
 	auto x = fast_power(base, exponent / 2);
-	if (exponent % 2 == 0)
+	if (fmod(exponent, 2) == 0)
 		return x * x;
 	else
 		return base * x * x;
@@ -90,12 +90,12 @@ Token::pointer_type Power::perform(TokenList& values){
 	}
 	else
 	{
-		auto exp = Integer::value_type(value_of<Real>(values[0]));
+		auto exp = value_of<Real>(values[0]);
 		auto base = value_of<Real>(values[1]);
 		if (exp < 0)
-			return make<Real>(1.0 / (fast_power(base, exp * (-1))));
+			return make<Real>(1.0 / (pow(base, exp * (-1))));
 		else
-			return make<Real>(fast_power(base, exp));
+			return make<Real>(pow(base, exp));
 	}
 }
 
@@ -229,7 +229,8 @@ Token::pointer_type Factorial::perform(TokenList& values) {
 
 //Not operation
 Token::pointer_type Not::perform(TokenList& values) {
-	return make<Boolean>(!value_of<Boolean>(values[0]));
+	auto a = convert<Boolean>(values[0]);
+	return value_of<Boolean>(a) == true ? make<False>() : make<True>();
 }
 
 //And operation
