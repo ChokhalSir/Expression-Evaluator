@@ -35,8 +35,10 @@ the program(s) have been supplied.
 =============================================================*/
 
 #include <ee/operation.hpp>
+#include <ee/operand.hpp>
 #include <sstream>
 #include <typeinfo>
 using namespace std;
+
 
 

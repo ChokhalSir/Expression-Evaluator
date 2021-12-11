@@ -46,7 +46,9 @@ the program(s) have been supplied.
 #include <ee/function.hpp>
 #include <ee/operator.hpp>
 #include <ee/integer.hpp>
+#include <ee/boolean.hpp>
 #include <ee/real.hpp>
+#include <ee/RPNEvaluator.hpp>
 
 //Abs operation
 Token::pointer_type Abs::perform(TokenList& values) {
@@ -161,8 +163,28 @@ Token::pointer_type Arctan2::perform(TokenList& values) {
 	return make<Real>(atan2(value_of<Real>(values[1]),value_of<Real>(values[0])));
 }
 
+//declaration of results
+std::map<Integer::value_type, Operand::pointer_type> Result::results_;
+
 //Result operation
 Token::pointer_type Result::perform(TokenList& values) {
-	return make<Real>(value_of<Real>(values[0]));
+	auto key = value_of<Integer>(values[0]);
+	auto result = results_.find(key);
+	if (result != results_.end()) {
+		if(is<Integer>(result->second))
+			return make<Integer>(value_of<Integer>(result->second));
+		else if(is<Real>(result->second))
+			return make<Real>(value_of<Real>(result->second));
+		else
+			return make<Boolean>(value_of<Boolean>(result->second));
+	}
+	else
+		return Token::pointer_type();
+}
+
+//Save results
+void Result::saveResults(Operand::pointer_type const& value) {
+	Integer::value_type key = Result::results_.size() + 1;
+	Result::results_[key] = value;
 }
 

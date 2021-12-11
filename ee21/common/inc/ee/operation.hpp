@@ -56,6 +56,7 @@ the program(s) have been supplied.
 
 /*! Operation token base class. */
 class Operation : public Token {
+
 public:
 	DEF_POINTER_TYPE(Operation)
 

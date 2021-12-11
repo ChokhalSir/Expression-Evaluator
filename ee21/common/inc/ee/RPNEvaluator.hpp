@@ -33,6 +33,7 @@ the program(s) have been supplied.
 =============================================================*/
 
 #include <ee/operand.hpp>
+#include <ee/integer.hpp>
 
 class RPNEvaluator {
 	RPNEvaluator(RPNEvaluator const&) = delete;

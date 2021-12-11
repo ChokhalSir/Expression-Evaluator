@@ -23,4 +23,4 @@
 #define TEST_RELATIONAL_OPERATOR true
 
 #define TEST_VARIABLE true
-#define TEST_RESULT false
+#define TEST_RESULT true

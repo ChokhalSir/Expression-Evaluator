@@ -71,6 +71,7 @@ the program(s) have been supplied.
 #include <ee/operation.hpp>
 #include <ee/integer.hpp>
 #include <vector>
+#include <map>
 
 /*! Function token base class. */
 class Function : public Operation { };
@@ -149,8 +150,11 @@ class Function : public Operation { };
 
 				/*! previous result token. Argument is the 1-base index of the result. */
 				class Result : public OneArgFunction { 
+				protected:
+					static std::map<Integer::value_type, Operand::pointer_type> results_;
 				public:
 					[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
+					void saveResults(Operand::pointer_type const& value);
 				};
 
 				/*! sine function token. */

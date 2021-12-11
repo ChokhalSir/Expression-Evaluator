@@ -41,6 +41,7 @@ the program(s) have been supplied.
 #include <algorithm>
 
 
+
 [[nodiscard]] Operand::pointer_type RPNEvaluator::evaluate( TokenList const& rpnExpression ) {
 	
 	TokenList stack;
@@ -87,7 +88,6 @@ the program(s) have been supplied.
 					values.push_back(stack.back());
 					stack.pop_back();
 				}
-				
 			}
 			if(values.size() == 1 && is<Variable>(values[0]))
 				throw std::exception("Error: variable not initialized");
