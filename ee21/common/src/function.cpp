@@ -188,3 +188,6 @@ void Result::saveResults(Operand::pointer_type const& value) {
 	Result::results_[key] = value;
 }
 
+void Result::clearResults() {
+	Result::results_.clear();
+}

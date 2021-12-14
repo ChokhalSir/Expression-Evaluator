@@ -155,6 +155,7 @@ class Function : public Operation { };
 				public:
 					[[nodiscard]] virtual Token::pointer_type perform(TokenList& values) override;
 					void saveResults(Operand::pointer_type const& value);
+					void clearResults();
 				};
 
 				/*! sine function token. */

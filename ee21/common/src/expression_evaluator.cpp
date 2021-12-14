@@ -57,7 +57,6 @@ the program(s) have been supplied.
 #endif
 
 	Operand::pointer_type result = rpn_m.evaluate(postfixTokens);
-	Result results;
-	results.saveResults(result);
+	results_m.saveResults(result);
 	return result;
 }

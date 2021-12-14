@@ -195,6 +195,6 @@
   0.6	0.6	11f_assignment_to_constant_fail
   0.6	0.6	11g_EE_variable
   0.6	0.6	11h_EE_variable
-  3.3	5.0	12a_express_result
+  5.0	5.0	12a_express_result
 
-Score = 93.3 of 95.0 (98.2%)
+Score = 95.0 of 95.0 (100.0%)

@@ -42,6 +42,8 @@ private:
 	Tokenizer		tokenizer_m;
 	Parser			parser_m;
 	RPNEvaluator	rpn_m;
+	Result			results_m;
 public:
+	~ExpressionEvaluator() { results_m.clearResults(); }
 	[[nodiscard]] result_type evaluate(expression_type const& expr);
 };
